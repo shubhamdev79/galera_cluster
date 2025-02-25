@@ -1,0 +1,15 @@
+---
+
+- name: Add mariabdb-repo file for linux
+  template:
+    src: mariadb-repo.j2
+    dest: /etc/yum.repos.d/mariadb_repo
+  when:
+
+- name: clean yum cache
+  shell: yum clean all
+
+- name: Install galera_cluster
+  import_tasks: galera_packages.yml
+  tags: install_cluster
+  when: 
