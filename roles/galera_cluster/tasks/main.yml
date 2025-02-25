@@ -1,0 +1,17 @@
+- name: Get the installed mariadb rpm
+  command: "rpm -qa MariaDB-server*"
+  ignore_errors: true
+  check_mode: no
+  register: mariadb_version_result
+
+- name: Check if mariadb is already installed
+  set_fact:
+     mariadb_installed: "{{ mariadb_version_result.stdout }}"
+
+- name: galera initial setup
+  import_tasks: galera.yml
+  when: not mariadb_installed
+
+- name: galera rolling_updates
+  import_tasks: galera_rolling_update.yml
+  when: (not galera_site) and mariadb_installed | length > 0

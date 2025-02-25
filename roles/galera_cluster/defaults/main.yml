@@ -1,0 +1,7 @@
+---
+
+ansible_become: true
+ansible_become_method: sudo
+
+mariadb_repo_version: 10.3.13
+mariadb_repo_url: https://archive.mariadb.org
